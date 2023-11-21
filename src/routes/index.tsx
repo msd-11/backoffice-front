@@ -17,12 +17,18 @@ export const AppRoutes = () => {
     return (
       <>
         <Sidebar />
-        <main className="bg-main-background h-screen w-screen relative overflow-auto p-4">
+        <main className="bg-main-background h-screen w-screen relative overflow-auto">
           {element}
         </main>
       </>
     );
   } else {
-    return <>{element}</>;
+    return (
+      <>
+        <main className="bg-main-background h-screen w-screen relative overflow-auto ">
+          {element}
+        </main>
+      </>
+    );
   }
 };

@@ -1,12 +1,12 @@
 import * as React from "react";
-import { columns } from "@/components/Products/Columns";
-import DataTable from "@/components/Products/DataTable";
+import DataTable from "../components/DataTable";
+import { columns } from "../components/Columns";
 
 interface IProps {}
 
 const Produits: React.FC<IProps> = () => {
   return (
-    <div>
+    <div className="p-4">
       <DataTable
         columns={columns}
         data={[

@@ -1,19 +1,11 @@
-import ProductImage from "@/components/Products/ProductImage";
-import ProductInformation from "@/components/Products/ProductInformation";
-import ProductVisibility from "@/components/Products/ProductVisiblity";
 import { useStore } from "@/stores/store";
 
 import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import ProductStock from "@/components/Products/ProductStock";
+import { Form } from "@/components/ui/form";
+import ProductInformation from "../components/ProductInformation";
+import ProductImage from "../components/ProductImage";
+import ProductStock from "../components/ProductStock";
+import ProductVisibility from "../components/ProductVisiblity";
 
 interface IProps {}
 

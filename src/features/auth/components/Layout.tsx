@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/Logo.svg";
 import { Link } from "react-router-dom";
 
 type LayoutProps = {
@@ -11,12 +11,11 @@ type LayoutProps = {
 export const Layout = ({ children, title }: LayoutProps) => {
   return (
     <>
-      <h1>{title}</h1>
-      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 flex flex-col justify-center pb-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="flex justify-center">
             <Link className="flex items-center text-white" to="/">
-              <img className="h-24 w-auto" src={logo} alt="Workflow" />
+              <img className="h-auto w-36" src={logo} alt="Workflow" />
             </Link>
           </div>
 
