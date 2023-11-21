@@ -1,26 +1,13 @@
-import "./App.css";
-import Sidebar from "./components/Sidebar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Produits from "./views/Produits";
+import "@/App.css";
+import { AppProvider } from "./providers/app";
+import { AppRoutes } from "./routes";
 
 function App() {
-    return (
-        <>
-            <BrowserRouter>
-                <Sidebar />
-                <main
-                    className={
-                        "bg-main-background h-screen w-screen relative overflow-auto"
-                    }
-                >
-                    <Routes>
-                        <Route path={"/"} element={<div>Home</div>} />
-                        <Route path={"/produits"} element={<Produits />} />
-                    </Routes>
-                </main>
-            </BrowserRouter>
-        </>
-    );
+  return (
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
+  );
 }
 
 export default App;

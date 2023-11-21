@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+p {
+    font-family: Montserrat;
+}
+
+.currency-input::before {
+    content: "$";
+    position: absolute;
+    left: 0.75rem; /* Adjust the positioning as needed */
+    top: 50%; /* Center the "$" vertically within the input */
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensure the "$" doesn't interfere with input */
+}
+
 @layer base {
     :root {
         --background: 0 0% 100%;
