@@ -23,6 +23,7 @@
     "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "flag-icons": "^7.0.2",
     "localforage": "^1.10.0",
     "lucide-react": "^0.279.0",
     "match-sorter": "^6.3.1",

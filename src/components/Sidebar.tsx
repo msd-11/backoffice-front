@@ -6,6 +6,7 @@ import {
   ClipboardList,
   ShoppingCart,
   LucideIcon,
+  User2,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -42,6 +43,13 @@ const Sidebar: React.FC<IProps> = () => {
           Icon={ShoppingCart}
           selected={location.pathname === "/orders"}
         />
+        <NavItem
+          className={"absolute bottom-5"}
+          title="Mon compte"
+          to="/account"
+          Icon={User2}
+          selected={location.pathname.startsWith("/account")}
+        />
       </section>
     </div>
   );
@@ -52,11 +60,21 @@ interface NavItemProps {
   to: string;
   Icon: LucideIcon;
   selected: boolean;
+  className?: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ title, to, Icon, selected }) => {
+const NavItem: React.FC<NavItemProps> = ({
+  title,
+  to,
+  Icon,
+  selected,
+  className = "",
+}) => {
   return (
-    <Link to={to} className={`nav-item ${selected ? "selected" : ""}`}>
+    <Link
+      to={to}
+      className={`nav-item ${selected ? "selected" : ""} ${className}`}
+    >
       <IconButton title={title} Icon={Icon} selected={selected} />
     </Link>
   );

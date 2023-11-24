@@ -7,13 +7,12 @@ import storage from "@/utils/storage";
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   const token = storage.getToken();
   if (token) {
-    config.headers!.authorization = `${token}`;
+    config.headers!.authorization = `Bearer ${token}`;
   }
   config.headers!.Accept = "application/json";
   return config;
 }
 
-console.log(API_URL);
 export const axios = Axios.create({
   baseURL: API_URL,
 });
@@ -24,7 +23,8 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    const message = error.response?.data?.message || error.message;
+    console.log(error.response);
+    const message = error.response?.data?.error.description || error.message;
     useNotificationStore.getState().addNotification({
       type: "error",
       title: "Error",

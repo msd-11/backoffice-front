@@ -1,7 +1,6 @@
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -9,15 +8,22 @@ import {
 } from "@/components/ui/form";
 import { useLogin } from "@/lib/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useNotificationStore } from "@/stores/notifications";
 
 const schema = z.object({
-  email: z.string().min(1, "Required"),
-  password: z.string().min(1, "Required"),
+  email: z
+    .string()
+    .min(1, {
+      message: "Veuillez remplir ce champ.",
+    })
+    .email("Veuillez entrer une adresse e-mail valide."),
+  password: z
+    .string()
+    .min(1, { message: "Veuillez entrer votre mot de passe." }),
 });
 
 type LoginFormProps = {
@@ -25,6 +31,7 @@ type LoginFormProps = {
 };
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
+  const notifications = useNotificationStore((state) => state.notifications);
   const login = useLogin();
 
   const form = useForm<z.infer<typeof schema>>({
@@ -39,6 +46,8 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     login.mutate(values);
     onSuccess();
   };
+
+  console.log(notifications);
 
   return (
     <div>
@@ -62,7 +71,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Mot de passe</FormLabel>
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
@@ -70,9 +79,14 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               </FormItem>
             )}
           />
+          <p className="text-red-500 font-bold">
+            {notifications.length > 0
+              ? notifications[notifications.length - 1].message
+              : false}
+          </p>
           <div>
             <Button disabled={login.isPending} type="submit" className="w-full">
-              Log in
+              Se connecter
             </Button>
           </div>
         </form>
