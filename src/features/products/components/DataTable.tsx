@@ -30,6 +30,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Payment } from "./Columns";
+import { Link } from "react-router-dom";
 
 interface DataTableProps {
   columns: ColumnDef<Payment>[];
@@ -103,6 +104,9 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Link to={"/produits/add"}>
+          <Button className="ml-4">Ajouter</Button>
+        </Link>{" "}
       </div>
       <div className="rounded-md border">
         <Table>

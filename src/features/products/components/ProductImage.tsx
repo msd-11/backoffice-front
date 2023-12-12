@@ -12,16 +12,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { API_URL } from "@/config";
 
 interface IProps {}
 
 const ProductImage: React.FC<IProps> = () => {
   const { productStore } = useStore();
-  const [images, setImages] = useState([
-    "https://www.cherrymx.de/_Resources/Persistent/3/f/3/c/3f3cc49f11b55bb11db3ade8f8b1ee5404f90a24/MX2A_Red_non_RGB-368x368.png",
-    "https://www.cherrymx.de/_Resources/Persistent/3/f/3/c/3f3cc49f11b55bb11db3ade8f8b1ee5404f90a24/MX2A_Red_non_RGB-368x368.png",
-  ]);
-
   const [currentImage, setCurrentImage] = useState(
     "https://www.cherrymx.de/_Resources/Persistent/3/f/3/c/3f3cc49f11b55bb11db3ade8f8b1ee5404f90a24/MX2A_Red_non_RGB-368x368.png"
   );
@@ -30,11 +26,15 @@ const ProductImage: React.FC<IProps> = () => {
     setCurrentImage(imageUrl);
   };
 
+  if (productStore.form.getValues("images") === undefined) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col p-6 h-fit rounded-xl drop-shadow-sm bg-white gap-5">
       <Title>Image du produit</Title>
 
-      {images.length === 0 ? (
+      {productStore.form.getValues("images").length === 0 ? (
         <FormField
           control={productStore.form.control}
           name="imageProduit"
@@ -90,14 +90,16 @@ const ProductImage: React.FC<IProps> = () => {
             />
           </div>
           <div className="flex gap-4 mt-4">
-            {images.map((imageUrl: string) => (
+            {productStore.form.getValues("images").map((image: any) => (
               <div className="flex justify-center bg-gray-100 rounded-xl h-20 w-20">
                 <img
                   className={`bg-gray-100 object-contain h-auto w-full rounded-xl border-primary ${
-                    currentImage === imageUrl ? "border-2" : ""
+                    currentImage === `${API_URL}/${image.path}`
+                      ? "border-2"
+                      : ""
                   }`}
-                  src={imageUrl}
-                  onClick={() => handleImageClick(imageUrl)}
+                  src={`${API_URL}/${image.path}`}
+                  onClick={() => handleImageClick(`${API_URL}/${image.path}`)}
                 />
               </div>
             ))}

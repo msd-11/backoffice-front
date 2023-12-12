@@ -14,3 +14,10 @@ export type UserResponse = {
     "refresh-token": string;
   };
 };
+
+export type RefreshResponse = {
+  statusCode: number;
+  data: {
+    "access-token": string;
+  };
+};

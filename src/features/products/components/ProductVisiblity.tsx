@@ -21,17 +21,17 @@ const ProductVisibility: React.FC<IProps> = () => {
       <Title>Visibilité</Title>
       <FormField
         control={productStore.form.control}
-        name="visibiliteProduit"
+        name="status"
         render={({ field: { onChange, value } }) => (
           <FormItem>
             <FormControl>
               <RadioGroup value={value} onValueChange={onChange}>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="published" id="publishedRadio" />
+                  <RadioGroupItem value="Active" id="publishedRadio" />
                   <Label htmlFor="publishedRadio">Publié</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="hidden" id="hiddenRadio" />
+                  <RadioGroupItem value="Inactive" id="hiddenRadio" />
                   <Label htmlFor="hiddenRadio">Caché</Label>
                 </div>
               </RadioGroup>

@@ -13,7 +13,7 @@ import storage from "@/utils/storage";
 
 async function handleUserResponse(dataResponse: UserResponse) {
   const { data } = dataResponse;
-  storage.setToken(data["access-token"]);
+  storage.setToken(data["access-token"], data["refresh-token"]);
   return data["access-token"];
 }
 

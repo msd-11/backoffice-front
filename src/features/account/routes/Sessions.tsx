@@ -11,14 +11,14 @@ const Sessions: React.FC<IProps> = () => {
     return <div>Loading</div>;
   }
 
-  if (sessionsQuery.data) {
-    console.log(sessionsQuery.data);
+  if (!sessionsQuery.data) {
+    return null;
   }
 
   return (
     <div>
       {sessionsQuery.data!.map((value) => {
-        return <SessionItem />;
+        return <SessionItem session={value} />;
       })}
     </div>
   );

@@ -24,37 +24,22 @@ const ProductStock: React.FC<IProps> = () => {
         <div className="grid w-full items-center gap-1.5">
           <FormField
             control={productStore.form.control}
-            name="stockProduit"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Stock
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    id="stockNumber"
-                    placeholder="Nombre de produits disponible"
-                    type="number"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="grid w-full items-center gap-1.5">
-          <FormField
-            control={productStore.form.control}
-            name="priceProduit"
+            name="price"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Prix
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="En euro" {...field} type="number" />
+                  <Input
+                    placeholder="En euro"
+                    {...field}
+                    type="number"
+                    step="0.01"
+                    onChange={(e) => {
+                      field.onChange(parseFloat(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -12,29 +12,50 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select as SelectSingle,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useManufacturers } from "@/features/manufacturers/api/getManufacturers";
+import { useCategories } from "../api/getCategories";
+
+import Select from "react-select";
+import { Category } from "../types";
 
 interface IProps {}
 
 const ProductInformation: React.FC<IProps> = () => {
   const { productStore } = useStore();
+  const manufacturerQuery = useManufacturers();
+  const categoryQuery = useCategories();
+
+  if (manufacturerQuery.isLoading || categoryQuery.isLoading) {
+    return <div>Loading</div>;
+  }
+
+  if (!manufacturerQuery.data || !categoryQuery.data) {
+    return null;
+  }
+
+  console.log(manufacturerQuery.data);
+
   return (
     <div className="flex flex-col p-6 rounded-xl drop-shadow-sm bg-white gap-5">
       <Title>Informations basiques</Title>
       <div className="grid w-full items-center gap-1.5">
         <FormField
           control={productStore.form.control}
-          name="nomProduit"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Nom du produit
               </FormLabel>
               <FormControl>
-                <Input
-                  id="productName"
-                  placeholder="Intitulé du produit"
-                  {...field}
-                />
+                <Input id="name" placeholder="Intitulé du produit" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -45,7 +66,7 @@ const ProductInformation: React.FC<IProps> = () => {
       <div className="grid w-full items-center gap-1.5">
         <FormField
           control={productStore.form.control}
-          name="descriptionProduit"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -63,6 +84,73 @@ const ProductInformation: React.FC<IProps> = () => {
           )}
         />
       </div>
+
+      <div className="grid grid-cols-3 w-full items-center gap-1.5">
+        <FormField
+          control={productStore.form.control}
+          name="manufacturer"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Fournisseur
+                </FormLabel>
+                <FormControl>
+                  <SelectSingle onValueChange={field.onChange}>
+                    <SelectTrigger className="w-[250px]">
+                      <SelectValue placeholder="Sélectionner un fournisseur" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {manufacturerQuery.data!.data.map((value) => (
+                        <SelectItem value={value.id.toString()}>
+                          {value.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </SelectSingle>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+
+        <FormField
+          control={productStore.form.control}
+          name="categories"
+          render={({ field }) => {
+            return (
+              <FormItem className="col-span-2">
+                <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Catégories
+                </FormLabel>
+                <FormControl>
+                  <Select
+                    placeholder={"Sélectionner des catégories..."}
+                    menuPortalTarget={document.body}
+                    styles={{
+                      menuPortal: (base) => ({
+                        ...base,
+                        zIndex: 9999,
+                      }),
+                    }}
+                    isMulti
+                    onChange={(value) =>
+                      field.onChange(value.map((value) => value.value))
+                    }
+                    options={categoryQuery.data.data.map((category) => {
+                      return { value: category.id, label: category.name };
+                    })}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+      </div>
+
+      <div className="grid w-full items-center gap-1.5"></div>
     </div>
   );
 };

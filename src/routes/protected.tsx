@@ -9,6 +9,11 @@ const { ProductsRoutes } = lazyImport(
   "ProductsRoutes"
 );
 
+const { ManufacturerRoutes } = lazyImport(
+  () => import("@/features/manufacturers"),
+  "ManufacturerRoutes"
+);
+
 const App = () => {
   return (
     <main
@@ -30,6 +35,7 @@ const App = () => {
 export const protectedRoutes = [
   { path: "/produits/*", element: <ProductsRoutes /> },
   { path: "/account/*", element: <AccountRoutes /> },
+  { path: "/manufacturer/*", element: <ManufacturerRoutes /> },
   { path: "/", element: <div>Home</div> },
   { path: "*", element: <Navigate to="." /> },
 ];

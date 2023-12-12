@@ -20,4 +20,5 @@ export type IpInfoResponse = {
 export type IpInfo = {
   country: string;
   countryCode: string;
+  city: string;
 };

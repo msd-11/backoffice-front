@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { AuthLoader } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 
 const ErrorFallback = () => {
   return (
@@ -42,6 +43,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             <AuthLoader renderLoading={() => <div>Loading</div>}>
+              <Toaster />
               <Router>{children}</Router>
             </AuthLoader>
           </QueryClientProvider>
