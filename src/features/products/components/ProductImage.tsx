@@ -26,15 +26,14 @@ const ProductImage: React.FC<IProps> = () => {
     setCurrentImage(imageUrl);
   };
 
-  if (productStore.form.getValues("images") === undefined) {
-    return null;
-  }
+  console.log(productStore.form.getValues());
 
   return (
     <div className="flex flex-col p-6 h-fit rounded-xl drop-shadow-sm bg-white gap-5">
       <Title>Image du produit</Title>
 
-      {productStore.form.getValues("images").length === 0 ? (
+      {productStore.form.getValues("images") === undefined ||
+      productStore.form.getValues("images").length === 0 ? (
         <FormField
           control={productStore.form.control}
           name="imageProduit"

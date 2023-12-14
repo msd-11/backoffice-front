@@ -35,7 +35,7 @@ const App = () => {
 export const protectedRoutes = [
   { path: "/produits/*", element: <ProductsRoutes /> },
   { path: "/account/*", element: <AccountRoutes /> },
-  { path: "/manufacturer/*", element: <ManufacturerRoutes /> },
+  { path: "/fournisseurs/*", element: <ManufacturerRoutes /> },
   { path: "/", element: <div>Home</div> },
   { path: "*", element: <Navigate to="." /> },
 ];

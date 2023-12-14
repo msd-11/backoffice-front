@@ -19,13 +19,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
+import { addManufacturer } from "../api/addManufacturer";
 
 interface IProps {}
 
-const ManufacturerDetail: React.FC<IProps> = () => {
+const ManufacturerAdd: React.FC<IProps> = () => {
   const { id } = useParams();
-
-  const manufacturerQuery = useManufacturer({ manufacturerId: id });
 
   const manufacturerSchema = z.object({
     name: z.string(),
@@ -34,21 +33,15 @@ const ManufacturerDetail: React.FC<IProps> = () => {
     email: z.string().email(),
     website: z.string().url(),
     country: z.string(),
-    status: z
-      .enum(["Active", "Inactive"])
-      .default(
-        manufacturerQuery.data?.data.status === "Active" ? "Active" : "Inactive"
-      ),
+    status: z.enum(["Active", "Inactive"]).default("Active"),
   });
-
-  useEffect(() => {}, [manufacturerQuery.data, manufacturerSchema]);
 
   const handleSubmit = (values: FieldValues) => {
     const data = { ...values, id: parseInt(id) };
     console.log(data);
 
     try {
-      updateManufacturer(data as Manufacturer);
+      addManufacturer(data as Manufacturer);
       toast({
         title: "Mise à jour",
         description: "Fournisseur mis à jour avec succès",
@@ -63,20 +56,11 @@ const ManufacturerDetail: React.FC<IProps> = () => {
     }
   };
 
-  if (manufacturerQuery.isLoading) {
-    return <div>Loading</div>;
-  }
-
-  if (!manufacturerQuery.data) {
-    return null;
-  }
-
   return (
     <div>
-      <p className="p-6 text-2xl font-bold">Modifier fournisseur</p>
+      <p className="p-6 text-2xl font-bold">Ajouter un fournisseur</p>
       <AutoForm
         // Pass the schema to the form
-        values={manufacturerQuery.data?.data}
         className="p-6"
         formSchema={manufacturerSchema}
         onSubmit={handleSubmit}
@@ -103,10 +87,10 @@ const ManufacturerDetail: React.FC<IProps> = () => {
           },
         }}
       >
-        <AutoFormSubmit>Sauvegarder</AutoFormSubmit>
+        <AutoFormSubmit>Ajouter</AutoFormSubmit>
       </AutoForm>
     </div>
   );
 };
 
-export default ManufacturerDetail;
+export default ManufacturerAdd;

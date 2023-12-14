@@ -45,10 +45,10 @@ const Sidebar: React.FC<IProps> = () => {
           selected={location.pathname === "/orders"}
         />
         <NavItem
-          title="Manufacturers"
-          to="/manufacturer"
+          title="Fournisseurs"
+          to="/fournisseurs"
           Icon={Factory}
-          selected={location.pathname.startsWith("/manufacturer")}
+          selected={location.pathname.startsWith("/fournisseurs")}
         />
         <NavItem
           className={"absolute bottom-5"}

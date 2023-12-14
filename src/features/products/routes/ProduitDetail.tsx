@@ -30,13 +30,17 @@ const ProduitDetail: React.FC<IProps> = () => {
 
   useEffect(() => {
     if (!productQuery.isLoading && productQuery.data) {
+      console.log(productQuery.data!.data);
       productStore.form.reset(productQuery.data!.data);
     }
   }, [productQuery.data]);
 
   productStore.form = useForm();
 
-  if (productQuery.isLoading) {
+  if (
+    productQuery.isLoading ||
+    productStore.form.getValues("manufacturer") === undefined
+  ) {
     return <div>Loading</div>;
   }
 
@@ -52,7 +56,7 @@ const ProduitDetail: React.FC<IProps> = () => {
 
       toast({
         title: "Mise à jour",
-        description: "Produit mise à jour avec succès",
+        description: "Produit mis à jour avec succès",
         variant: "success",
       });
     } catch (e: unknown) {

@@ -18,3 +18,8 @@ export type Manufacturer = {
   };
   status: string;
 };
+
+export type ManufacturerResponse = {
+  statusCode: number;
+  data: Manufacturer;
+};

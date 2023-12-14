@@ -41,6 +41,7 @@ const ProductInformation: React.FC<IProps> = () => {
   }
 
   console.log(manufacturerQuery.data);
+  console.log(productStore.form.getValues());
 
   return (
     <div className="flex flex-col p-6 rounded-xl drop-shadow-sm bg-white gap-5">
@@ -96,7 +97,10 @@ const ProductInformation: React.FC<IProps> = () => {
                   Fournisseur
                 </FormLabel>
                 <FormControl>
-                  <SelectSingle onValueChange={field.onChange}>
+                  <SelectSingle
+                    defaultValue={field.value.toString()}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger className="w-[250px]">
                       <SelectValue placeholder="Sélectionner un fournisseur" />
                     </SelectTrigger>
@@ -126,6 +130,22 @@ const ProductInformation: React.FC<IProps> = () => {
                 </FormLabel>
                 <FormControl>
                   <Select
+                    defaultValue={field.value.map(
+                      (category: number | Category) => {
+                        console.log(category);
+
+                        if (typeof category === "number") {
+                          return {
+                            value: category,
+                            label: categoryQuery.data.data.find(
+                              (x) => x.id === category
+                            )!.name,
+                          };
+                        } else {
+                          return category;
+                        }
+                      }
+                    )}
                     placeholder={"Sélectionner des catégories..."}
                     menuPortalTarget={document.body}
                     styles={{

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { updateProduct } from "../api/updateProduct";
 import { Product } from "../types";
 import { useToast } from "@/components/ui/use-toast";
+import { addProduct } from "../api/addProduct";
 
 interface IProps {}
 
@@ -19,7 +20,17 @@ const ProduitAdd: React.FC<IProps> = () => {
 
   const { productStore } = useStore();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    productStore.form.reset({
+      categories: [],
+      description: "",
+      imageProduit: "",
+      manufacturer: "",
+      name: "",
+      price: "",
+      status: "",
+    });
+  }, []);
 
   productStore.form = useForm();
 
@@ -27,11 +38,11 @@ const ProduitAdd: React.FC<IProps> = () => {
     console.log(values);
 
     try {
-      await updateProduct(values as Product);
+      await addProduct(values as Product);
 
       toast({
-        title: "Mise à jour",
-        description: "Produit mise à jour avec succès",
+        title: "Ajout",
+        description: "Produit ajouté avec succès",
         variant: "success",
       });
     } catch (e: unknown) {
