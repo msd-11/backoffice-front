@@ -3,6 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { lazyImport } from "@/utils/lazyImport";
 import { AccountRoutes } from "@/features/account/routes";
+import { BlogsRoutes } from "@/features/blogs/routes";
 
 const { ProductsRoutes } = lazyImport(
   () => import("@/features/products"),
@@ -35,6 +36,7 @@ const App = () => {
 export const protectedRoutes = [
   { path: "/produits/*", element: <ProductsRoutes /> },
   { path: "/account/*", element: <AccountRoutes /> },
+  { path: "/blogs/*", element: <BlogsRoutes /> },
   { path: "/fournisseurs/*", element: <ManufacturerRoutes /> },
   { path: "/", element: <div>Home</div> },
   { path: "*", element: <Navigate to="." /> },

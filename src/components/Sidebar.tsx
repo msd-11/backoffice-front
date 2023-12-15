@@ -8,6 +8,7 @@ import {
   LucideIcon,
   User2,
   Factory,
+  Newspaper,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -49,6 +50,12 @@ const Sidebar: React.FC<IProps> = () => {
           to="/fournisseurs"
           Icon={Factory}
           selected={location.pathname.startsWith("/fournisseurs")}
+        />
+        <NavItem
+          title="Blogs"
+          to="/blogs"
+          Icon={Newspaper}
+          selected={location.pathname.startsWith("/blogs")}
         />
         <NavItem
           className={"absolute bottom-5"}
