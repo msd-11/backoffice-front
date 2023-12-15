@@ -24,6 +24,7 @@ import { useCategories } from "../api/getCategories";
 
 import Select from "react-select";
 import { Category } from "../types";
+import { useForm } from "react-hook-form";
 
 interface IProps {}
 
@@ -31,6 +32,9 @@ const ProductInformation: React.FC<IProps> = () => {
   const { productStore } = useStore();
   const manufacturerQuery = useManufacturers();
   const categoryQuery = useCategories();
+
+  if (productStore.form.getValues("categories") === undefined) {
+  }
 
   if (manufacturerQuery.isLoading || categoryQuery.isLoading) {
     return <div>Loading</div>;
@@ -98,8 +102,10 @@ const ProductInformation: React.FC<IProps> = () => {
                 </FormLabel>
                 <FormControl>
                   <SelectSingle
-                    defaultValue={field.value.toString()}
-                    onValueChange={field.onChange}
+                    defaultValue={
+                      field.value === null ? undefined : field.value.toString()
+                    }
+                    onValueChange={(value) => field.onChange(parseInt(value))}
                   >
                     <SelectTrigger className="w-[250px]">
                       <SelectValue placeholder="Sélectionner un fournisseur" />
@@ -130,22 +136,24 @@ const ProductInformation: React.FC<IProps> = () => {
                 </FormLabel>
                 <FormControl>
                   <Select
-                    defaultValue={field.value.map(
-                      (category: number | Category) => {
-                        console.log(category);
+                    defaultValue={
+                      field.value === null
+                        ? undefined
+                        : field.value.map((category: number | Category) => {
+                            console.log(category);
 
-                        if (typeof category === "number") {
-                          return {
-                            value: category,
-                            label: categoryQuery.data.data.find(
-                              (x) => x.id === category
-                            )!.name,
-                          };
-                        } else {
-                          return category;
-                        }
-                      }
-                    )}
+                            if (typeof category === "number") {
+                              return {
+                                value: category,
+                                label: categoryQuery.data.data.find(
+                                  (x) => x.id === category
+                                )!.name,
+                              };
+                            } else {
+                              return category;
+                            }
+                          })
+                    }
                     placeholder={"Sélectionner des catégories..."}
                     menuPortalTarget={document.body}
                     styles={{

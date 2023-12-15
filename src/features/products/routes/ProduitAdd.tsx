@@ -6,9 +6,8 @@ import ProductInformation from "../components/ProductInformation";
 import ProductImage from "../components/ProductImage";
 import ProductStock from "../components/ProductStock";
 import ProductVisibility from "../components/ProductVisiblity";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { updateProduct } from "../api/updateProduct";
 import { Product } from "../types";
 import { useToast } from "@/components/ui/use-toast";
 import { addProduct } from "../api/addProduct";
@@ -20,19 +19,19 @@ const ProduitAdd: React.FC<IProps> = () => {
 
   const { productStore } = useStore();
 
+  productStore.form = useForm();
+
   useEffect(() => {
     productStore.form.reset({
       categories: [],
       description: "",
       imageProduit: "",
-      manufacturer: "",
+      manufacturer: null,
       name: "",
-      price: "",
-      status: "",
+      price: null,
+      status: "Active",
     });
   }, []);
-
-  productStore.form = useForm();
 
   const onSubmit = async (values: FieldValues) => {
     console.log(values);
@@ -53,6 +52,10 @@ const ProduitAdd: React.FC<IProps> = () => {
       });
     }
   };
+
+  if (productStore.form.getValues("categories") === undefined) {
+    return null;
+  }
 
   return (
     <div className="h-max w-full bg-[#F9F9F9]">
