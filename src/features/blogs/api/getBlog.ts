@@ -6,7 +6,7 @@ import { ExtractFnReturnType } from "@/lib/react-query";
 import { BlogResponse } from "../types";
 
 export const getBlog = (blogId: number): Promise<BlogResponse> => {
-  return axios.get(`/blog/confidential/${blogId}`);
+  return axios.get(`/blogs/confidential/${blogId}`);
 };
 
 type QueryFnType = typeof getBlog;

@@ -10,17 +10,13 @@ interface IProps {}
 const Produits: React.FC<IProps> = () => {
   const productsQuery = useProducts();
 
-  if (productsQuery.isLoading) {
-    return <div>Loading</div>;
-  }
-
-  if (!productsQuery.data) {
-    return null;
-  }
-
   return (
     <div className="p-4">
-      <DataTable columns={columns} data={productsQuery.data} />
+      <DataTable
+        columns={columns}
+        data={productsQuery.data ? productsQuery.data : []}
+        isLoading={productsQuery.isLoading}
+      />
     </div>
   );
 };

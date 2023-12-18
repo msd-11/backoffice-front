@@ -26,11 +26,7 @@ const schema = z.object({
     .min(1, { message: "Veuillez entrer votre mot de passe." }),
 });
 
-type LoginFormProps = {
-  onSuccess: () => void;
-};
-
-export const LoginForm = ({ onSuccess }: LoginFormProps) => {
+export const LoginForm = () => {
   const notifications = useNotificationStore((state) => state.notifications);
   const login = useLogin();
 
@@ -44,10 +40,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 
   const onSubmit = (values: z.infer<typeof schema>) => {
     login.mutate(values);
-    onSuccess();
   };
-
-  console.log(notifications);
 
   return (
     <div>
@@ -80,9 +73,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             )}
           />
           <p className="text-red-500 font-bold">
-            {notifications.length > 0
-              ? notifications[notifications.length - 1].message
-              : false}
+            {login.error ? "Email ou mot de passe incorrecte" : false}
           </p>
           <div>
             <Button disabled={login.isPending} type="submit" className="w-full">

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useBlog } from "../api/getBlog";
+import { useBlog } from "../api/Blog";
 import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -12,34 +12,18 @@ import { FieldValues } from "react-hook-form";
 import { updateBlog } from "../api/updateBlog";
 import { Blog } from "../types";
 import { toast } from "@/components/ui/use-toast";
-import { useUser } from "@/lib/auth";
+import { addBlog } from "../api/addBlog";
 
 interface IProps {}
 
-const BlogDetail: React.FC<IProps> = () => {
-  const { id } = useParams();
+const BlogAdd: React.FC<IProps> = () => {
   const [value, setValue] = useState("");
   const [values, setValues] = useState<Partial<z.infer<typeof blogSchema>>>({});
 
-  const blogQuery = useBlog({ blogId: parseInt(id!) });
-
-  useEffect(() => {
-    if (!blogQuery.isLoading && blogQuery.data) {
-      setValue(blogQuery.data.data.content);
-    }
-  }, [blogQuery.data]);
-  if (blogQuery.isLoading) {
-    return <div>Loading</div>;
-  }
-
-  if (!blogQuery.data) {
-    return null;
-  }
-
   const blogSchema = z.object({
-    title: z.string().default(blogQuery.data.data.title).describe("Titre"),
-    slug: z.string().default(blogQuery.data.data.slug),
-    visible: z.boolean().default(blogQuery.data.data.visible).optional(),
+    title: z.string().describe("Titre"),
+    slug: z.string(),
+    visible: z.boolean().default(true),
   });
 
   const convertToSlug = (inputString: string) => {
@@ -51,22 +35,29 @@ const BlogDetail: React.FC<IProps> = () => {
     return slug.replace(/\s+/g, "-");
   };
 
-  const handleSave = (values: FieldValues) => {
+  const handleSave = async (values: FieldValues) => {
     console.log(values);
-
-    const data = { ...values, content: value, id: parseInt(id!) };
+    const data = { ...values, content: value };
 
     try {
-      updateBlog(data as Blog);
+      //updateBlog(data as Blog);
+      console.log(data);
+      const addblog = await addBlog(data as Blog);
+
       toast({
-        title: "Mise à jour",
-        description: "Blog mis à jour avec succès",
+        title: "Ajout",
+        description: "Blog ajouté avec succès",
         variant: "success",
       });
     } catch (e: unknown) {
+      console.log(e);
+      let errorMessage = "";
+      if (e.response.data.data.description === "Blog slug already exists")
+        errorMessage = "Le slug du blog est déjà existant";
+      else errorMessage = "Une erreur est survenue, veuillez réessayer";
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue, veuillez réessayer",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -81,8 +72,7 @@ const BlogDetail: React.FC<IProps> = () => {
         values={values}
         onValuesChange={(value) => {
           if (values.title === undefined) {
-            if (value.title !== blogQuery.data.data.title)
-              value.slug = convertToSlug(value.title);
+            value.slug = convertToSlug(value.title);
           } else {
             if (value.title !== values.title)
               value.slug = convertToSlug(value.title);
@@ -90,12 +80,21 @@ const BlogDetail: React.FC<IProps> = () => {
           setValues(value);
         }}
         formSchema={blogSchema}
+        fieldConfig={{
+          visible: {
+            inputProps: {
+              required: false,
+
+              defaultChecked: true,
+            },
+          },
+        }}
       >
         <MDEditor value={value} onChange={setValue} />
-        <AutoFormSubmit>Sauvegarder</AutoFormSubmit>
+        <AutoFormSubmit>Ajouter</AutoFormSubmit>
       </AutoForm>
     </div>
   );
 };
 
-export default BlogDetail;
+export default BlogAdd;

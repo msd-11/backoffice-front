@@ -1,19 +1,10 @@
 import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { lazyImport } from "@/utils/lazyImport";
 import { AccountRoutes } from "@/features/account/routes";
 import { BlogsRoutes } from "@/features/blogs/routes";
-
-const { ProductsRoutes } = lazyImport(
-  () => import("@/features/products"),
-  "ProductsRoutes"
-);
-
-const { ManufacturerRoutes } = lazyImport(
-  () => import("@/features/manufacturers"),
-  "ManufacturerRoutes"
-);
+import { ProductsRoutes } from "@/features/products";
+import { ManufacturerRoutes } from "@/features/manufacturers";
 
 const App = () => {
   return (

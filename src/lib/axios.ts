@@ -45,26 +45,17 @@ axios.interceptors.response.use(
         return axios(originalRequest);
       } catch (e) {
         storage.clearToken();
-
-        const message =
-          error.response?.data?.error.description || error.message;
-        useNotificationStore.getState().addNotification({
-          type: "error",
-          title: "Error",
-          message,
-        });
         window.location.reload();
 
         return Promise.reject(error);
       }
+    } else if (
+      !storage.getToken() ||
+      (!storage.getRefreshToken() &&
+        error.response.data.data.description !== "Email or password missmatch")
+    ) {
+      window.location.reload();
     } else {
-      const message = error.response?.data?.error.description || error.message;
-      useNotificationStore.getState().addNotification({
-        type: "error",
-        title: "Error",
-        message,
-      });
-
       return Promise.reject(error);
     }
   }

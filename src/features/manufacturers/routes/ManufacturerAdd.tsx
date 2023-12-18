@@ -43,8 +43,8 @@ const ManufacturerAdd: React.FC<IProps> = () => {
     try {
       addManufacturer(data as Manufacturer);
       toast({
-        title: "Mise à jour",
-        description: "Fournisseur mis à jour avec succès",
+        title: "Ajout",
+        description: "Fournisseur ajouté avec succès",
         variant: "success",
       });
     } catch (e: unknown) {

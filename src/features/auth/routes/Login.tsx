@@ -8,7 +8,7 @@ export const Login = () => {
 
   return (
     <Layout title="Connexion au back-office">
-      <LoginForm onSuccess={() => navigate("/")} />
+      <LoginForm />
     </Layout>
   );
 };

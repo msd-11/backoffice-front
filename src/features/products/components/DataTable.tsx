@@ -31,13 +31,16 @@ import {
 } from "@/components/ui/table";
 import { Payment } from "./Columns";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface DataTableProps {
   columns: ColumnDef<Payment>[];
   data: Payment[];
+  isLoading: boolean;
 }
 
-const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
+const DataTable: React.FC<DataTableProps> = ({ columns, data, isLoading }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -129,7 +132,17 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              Array.from({ length: 10 }, (_, index) => index + 1).map(() => (
+                <TableRow>
+                  {table.getHeaderGroups()[0].headers.map((cell) => (
+                    <TableCell className="py-8" key={cell.id}>
+                      <Skeleton className="h-4" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
