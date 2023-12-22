@@ -32,13 +32,23 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthLoader renderLoading={() => <div>Loading</div>}>
-          <Toaster />
-          <Router>{children}</Router>
-        </AuthLoader>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <React.Suspense
+      fallback={
+        <div className="flex items-center justify-center w-screen h-screen">
+          <p>AAAAAAAAAAA</p>
+        </div>
+      }
+    >
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <HelmetProvider>
+          <QueryClientProvider client={queryClient}>
+            <AuthLoader renderLoading={() => <div>Loading</div>}>
+              <Toaster />
+              <Router>{children}</Router>
+            </AuthLoader>
+          </QueryClientProvider>
+        </HelmetProvider>
+      </ErrorBoundary>
+    </React.Suspense>
   );
 };

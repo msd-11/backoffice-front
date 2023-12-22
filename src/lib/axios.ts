@@ -27,7 +27,22 @@ axios.interceptors.response.use(
     console.log(error.response);
 
     const originalRequest = error.config;
+    console.log("MHH");
+    console.log(
+      storage.getToken(),
+      storage.getRefreshToken(),
+      error.response.status === 401
+    );
+
+    console.log(storage.getToken() === null);
+    console.log(storage.getRefreshToken() === null);
+
     if (
+      (storage.getToken() === null || storage.getRefreshToken() === null) &&
+      error.response.data === ""
+    ) {
+      window.location.reload();
+    } else if (
       error.response.status === 401 &&
       storage.getToken() &&
       storage.getRefreshToken()
@@ -50,13 +65,16 @@ axios.interceptors.response.use(
         return Promise.reject(error);
       }
     } else if (
-      !storage.getToken() ||
-      (!storage.getRefreshToken() &&
-        error.response.data.data.description !== "Email or password missmatch")
+      (!storage.getToken() || !storage.getRefreshToken()) &&
+      error.response.data.data.description === "Email or password missmatch"
     ) {
+      return Promise.reject(error);
+    } else if (!storage.getToken() || !storage.getRefreshToken()) {
       window.location.reload();
     } else {
       return Promise.reject(error);
     }
+
+    console.log("FIN");
   }
 );
