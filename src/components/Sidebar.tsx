@@ -9,6 +9,8 @@ import {
   User2,
   Factory,
   Newspaper,
+  Contact2,
+  Users2,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -41,9 +43,9 @@ const Sidebar: React.FC<IProps> = () => {
         />
         <NavItem
           title="Commandes"
-          to="/orders"
+          to="/commandes"
           Icon={ShoppingCart}
-          selected={location.pathname === "/orders"}
+          selected={location.pathname === "/commandes"}
         />
         <NavItem
           title="Fournisseurs"
@@ -58,11 +60,23 @@ const Sidebar: React.FC<IProps> = () => {
           selected={location.pathname.startsWith("/blogs")}
         />
         <NavItem
+          title="Employés"
+          to="/employes"
+          Icon={Contact2}
+          selected={location.pathname.startsWith("/employes")}
+        />
+        <NavItem
+          title="Clients"
+          to="/clients"
+          Icon={Users2}
+          selected={location.pathname.startsWith("/clients")}
+        />
+        <NavItem
           className={"absolute bottom-5"}
           title="Mon compte"
-          to="/account"
+          to="/compte"
           Icon={User2}
-          selected={location.pathname.startsWith("/account")}
+          selected={location.pathname.startsWith("/compte")}
         />
       </section>
     </div>

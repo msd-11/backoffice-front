@@ -5,6 +5,9 @@ import { AccountRoutes } from "@/features/account/routes";
 import { BlogsRoutes } from "@/features/blogs/routes";
 import { ProductsRoutes } from "@/features/products";
 import { ManufacturerRoutes } from "@/features/manufacturers";
+import { EmployeesRoutes } from "@/features/employees";
+import { ClientRoutes } from "@/features/clients";
+import { OrderRoutes } from "@/features/orders";
 
 const App = () => {
   return (
@@ -25,8 +28,11 @@ const App = () => {
 };
 
 export const protectedRoutes = [
+  { path: "/commandes/*", element: <OrderRoutes /> },
+  { path: "/clients/*", element: <ClientRoutes /> },
+  { path: "/employes/*", element: <EmployeesRoutes /> },
   { path: "/produits/*", element: <ProductsRoutes /> },
-  { path: "/account/*", element: <AccountRoutes /> },
+  { path: "/compte/*", element: <AccountRoutes /> },
   { path: "/blogs/*", element: <BlogsRoutes /> },
   { path: "/fournisseurs/*", element: <ManufacturerRoutes /> },
   { path: "/", element: <div>Home</div> },

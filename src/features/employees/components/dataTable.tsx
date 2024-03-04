@@ -54,7 +54,6 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
   const table = useReactTable({
     data,
     columns,
@@ -78,10 +77,10 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Chercher fournisseur"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Chercher employé"
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("email")?.setFilterValue(event.target.value)
           }
           className="max-w-sm p-2 w-fit"
         />
@@ -114,7 +113,7 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Link to={"/fournisseurs/add"}>
+        <Link to={"/employes/add"}>
           <Button className="ml-4">Ajouter</Button>
         </Link>
       </div>
