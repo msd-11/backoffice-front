@@ -10,6 +10,10 @@ p {
   font-family: Montserrat;
 }
 
+body .w-md-editor-text-input {
+  font-family: Montserrat !important;
+}
+
 .currency-input::before {
   content: "$";
   position: absolute;

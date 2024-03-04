@@ -2,17 +2,12 @@ import { useParams } from "react-router-dom";
 import { useBlog } from "../api/getBlog";
 import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import AutoForm, { AutoFormSubmit } from "@/components/ui/auto-form";
-import { AutoFormInputComponentProps } from "@/components/ui/auto-form/types";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { FieldValues } from "react-hook-form";
 import { updateBlog } from "../api/updateBlog";
 import { Blog } from "../types";
 import { toast } from "@/components/ui/use-toast";
-import { useUser } from "@/lib/auth";
 
 interface IProps {}
 
