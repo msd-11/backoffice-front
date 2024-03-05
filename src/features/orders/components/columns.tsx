@@ -51,8 +51,11 @@ export const columns: ColumnDef<Order>[] = [
             <DropdownMenuLabel className="font-semibold select-none">
               Actions
             </DropdownMenuLabel>
-            <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              Voir détail
+            <DropdownMenuItem
+              onClick={() => {}}
+              className="hover:bg-gray-100 select-none"
+            >
+              Passer en traitement
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -69,13 +69,13 @@ const ProduitDetail: React.FC<IProps> = () => {
   };
 
   return (
-    <div className="h-max w-full bg-[#F9F9F9]">
+    <div className="h-full w-full bg-[#F9F9F9]">
       <p className="p-6 text-2xl font-bold">Modifier produit</p>
 
       <Form {...productStore.form}>
         <form
           onSubmit={productStore.form.handleSubmit(onSubmit)}
-          className="space-y-8"
+          className="space-y-6"
         >
           <div className="flex gap-6 p-6">
             <div className="flex flex-col w-3/4 gap-6">
@@ -88,7 +88,9 @@ const ProduitDetail: React.FC<IProps> = () => {
             </div>
           </div>
 
-          <Button type="submit">Sauvegarder</Button>
+          <Button className="ml-6" type="submit">
+            Sauvegarder
+          </Button>
         </form>
       </Form>
     </div>

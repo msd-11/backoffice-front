@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Title from "./Title";
+import chroma from "chroma-js";
 import { useStore } from "@/stores/store";
 import {
   Form,
@@ -42,6 +43,28 @@ const ProductInformation: React.FC<IProps> = () => {
 
   if (!manufacturerQuery.data || !categoryQuery.data) {
     return null;
+  }
+
+  function invertColor(hex) {
+    if (hex.indexOf("#") === 0) {
+      hex = hex.slice(1);
+    }
+    // convert 3-digit hex to 6-digits.
+    if (hex.length === 3) {
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    // invert color components
+    const r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+      g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+      b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+    // pad each with zeros and return
+    return "#" + padZero(r) + padZero(g) + padZero(b);
+  }
+
+  function padZero(str, len) {
+    len = len || 2;
+    const zeros = new Array(len).join("0");
+    return (zeros + str).slice(-len);
   }
 
   console.log(manufacturerQuery.data);
@@ -90,13 +113,13 @@ const ProductInformation: React.FC<IProps> = () => {
         />
       </div>
 
-      <div className="grid grid-cols-3 w-full items-center gap-1.5">
+      <div className="grid grid-cols-4 w-full items-center gap-1.5">
         <FormField
           control={productStore.form.control}
           name="manufacturer"
           render={({ field }) => {
             return (
-              <FormItem>
+              <FormItem className="col-span-1">
                 <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Fournisseur
                 </FormLabel>
@@ -169,6 +192,36 @@ const ProductInformation: React.FC<IProps> = () => {
                     options={categoryQuery.data.data.map((category) => {
                       return { value: category.id, label: category.name };
                     })}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+
+        <FormField
+          control={productStore.form.control}
+          name="color"
+          render={({ field }) => {
+            console.log(field);
+
+            const complementaryColor = invertColor(field.value);
+            console.log(complementaryColor);
+            return (
+              <FormItem className="col-span-1 pl-4">
+                <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Couleur
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    style={{
+                      backgroundColor: field.value,
+                      color: complementaryColor,
+                    }}
+                    id="color"
+                    placeholder="Couleur du produit"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />

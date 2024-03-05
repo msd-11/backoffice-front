@@ -11,6 +11,7 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { ResetPasswordDTO, resetPassword } from "../api/resetPassword";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -24,7 +25,8 @@ const disableEmployee = (puid: string) => {
   });
 };
 
-const reinitPassword = (puid: string) => {
+const reinitPassword = (email: string) => {
+  resetPassword({ email: email } as ResetPasswordDTO);
   toast({
     title: "Réinitialisation effectuée",
     description: "Un mail a été envoyé à l'employé",
@@ -64,7 +66,7 @@ export const columns: ColumnDef<Employee>[] = [
               Actions
             </DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => reinitPassword(employee.puid)}
+              onClick={() => reinitPassword(employee.email)}
               className="hover:bg-gray-100 select-none"
             >
               Réinitialiser mot de passe
