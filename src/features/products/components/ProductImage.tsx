@@ -20,13 +20,17 @@ interface IProps {}
 const ProductImage: React.FC<IProps> = () => {
   const { productStore } = useStore();
   const [currentImage, setCurrentImage] = useState(
-    "http://localhost:8080" + productStore.form.getValues("images")[0].path
+    productStore.form.getValues("images").length == 0
+      ? null
+      : "http://localhost:8080" + productStore.form.getValues("images")[0].path
   );
 
   const [allImages, setAllImages] = useState(
     productStore.form.getValues("images")
   );
 
+  console.log("ok");
+  console.log(productStore.form.getValues("images"));
   const handleImageClick = (imageUrl: string) => {
     setCurrentImage(imageUrl);
   };
@@ -38,6 +42,7 @@ const ProductImage: React.FC<IProps> = () => {
       .then((res: any) => {
         const temp = Array.from(allImages);
         temp.push({ path: res.data, order: temp.length + 1 });
+        console.log(temp);
         setAllImages(temp);
         productStore.form.setValue("images", temp);
         setCurrentImage("http://localhost:8080" + res.data);
@@ -102,12 +107,10 @@ const ProductImage: React.FC<IProps> = () => {
               <div className="flex justify-center bg-gray-100 rounded-xl h-20 w-20">
                 <img
                   className={`bg-gray-100 object-contain h-auto w-full rounded-xl border-primary ${
-                    currentImage === `${API_URL}/${image.path}`
-                      ? "border-2"
-                      : ""
+                    currentImage === `${API_URL}${image.path}` ? "border-2" : ""
                   }`}
-                  src={`${API_URL}/${image.path}`}
-                  onClick={() => handleImageClick(`${API_URL}/${image.path}`)}
+                  src={`${API_URL}${image.path}`}
+                  onClick={() => handleImageClick(`${API_URL}${image.path}`)}
                 />
               </div>
             ))}
