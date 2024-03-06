@@ -36,12 +36,6 @@ const Sidebar: React.FC<IProps> = () => {
           selected={location.pathname.startsWith("/produits")}
         />
         <NavItem
-          title="Tickets"
-          to="/tickets"
-          Icon={ClipboardList}
-          selected={location.pathname.startsWith("/tickets")}
-        />
-        <NavItem
           title="Commandes"
           to="/commandes"
           Icon={ShoppingCart}

@@ -15,7 +15,6 @@ export type Product = {
   description: string;
   price: number;
   images: {
-    id: number;
     path: string;
     order: number;
   }[];

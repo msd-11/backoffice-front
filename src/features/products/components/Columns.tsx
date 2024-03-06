@@ -22,7 +22,7 @@ export const columns: ColumnDef<Product>[] = [
       <div className="capitalize grid grid-cols-[25%_75%]  items-center gap-3">
         <img
           className="bg-gray-100 p-1 rounded w-14 h-14"
-          src={row.getValue("picture")}
+          src={"http://localhost:8080" + row.original.images[0]?.path ?? ""}
         />
         <p>{row.getValue("name")}</p>
       </div>

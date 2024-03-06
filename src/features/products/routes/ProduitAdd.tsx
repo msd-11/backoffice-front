@@ -25,7 +25,7 @@ const ProduitAdd: React.FC<IProps> = () => {
     productStore.form.reset({
       categories: [],
       description: "",
-      imageProduit: "",
+      images: [],
       manufacturer: null,
       name: "",
       price: null,

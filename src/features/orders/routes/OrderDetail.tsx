@@ -54,9 +54,9 @@ const OrderDetail: React.FC<IProps> = () => {
                 <p className="text-lg">Prix: ${item.price}</p>
               </div>
               <img
-                src={item.product.images[0].path}
+                src={"http://localhost:8080" + item.product.images[0].path}
                 alt={item.product.name}
-                className="w-16 h-16"
+                className="w-28 h-28"
               />
             </div>
           ))}
