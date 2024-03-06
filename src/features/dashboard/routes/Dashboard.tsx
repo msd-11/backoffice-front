@@ -218,7 +218,7 @@ const Dashboard: React.FC<IProps> = () => {
         </div>
 
         <div className="basis-1/3 flex flex-col border rounded-xl p-4 bg-white">
-          <p className="font-bold">Session par pays</p>
+          <p className="font-bold">Sessions par pays</p>
           <p className="text-gray-500">
             Affichage des données par session total
           </p>

@@ -25,7 +25,17 @@ export const columns: ColumnDef<Blog>[] = [
     accessorKey: "createdAt",
     header: "Crée le",
     cell: ({ row }) => {
-      return <p>{dayjs(row.original.createdAt).format("DD/MM/YYYY")}</p>;
+      return <p>{dayjs(row.original.createdAt).format("DD/MM/YYYY HH:mm")}</p>;
+    },
+  },
+
+  {
+    accessorKey: "lastUpdatedAt",
+    header: "Modifié le",
+    cell: ({ row }) => {
+      return (
+        <p>{dayjs(row.original.lastUpdatedAt).format("DD/MM/YYYY HH:mm")}</p>
+      );
     },
   },
   {

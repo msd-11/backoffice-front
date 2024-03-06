@@ -45,31 +45,6 @@ const ProductInformation: React.FC<IProps> = () => {
     return null;
   }
 
-  function invertColor(hex) {
-    if (hex.indexOf("#") === 0) {
-      hex = hex.slice(1);
-    }
-    // convert 3-digit hex to 6-digits.
-    if (hex.length === 3) {
-      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    }
-    // invert color components
-    const r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
-      g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
-      b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
-    // pad each with zeros and return
-    return "#" + padZero(r) + padZero(g) + padZero(b);
-  }
-
-  function padZero(str, len) {
-    len = len || 2;
-    const zeros = new Array(len).join("0");
-    return (zeros + str).slice(-len);
-  }
-
-  console.log(manufacturerQuery.data);
-  console.log(productStore.form.getValues());
-
   return (
     <div className="flex flex-col p-6 rounded-xl drop-shadow-sm bg-white gap-5">
       <Title>Informations basiques</Title>
@@ -204,10 +179,6 @@ const ProductInformation: React.FC<IProps> = () => {
           control={productStore.form.control}
           name="color"
           render={({ field }) => {
-            console.log(field);
-
-            const complementaryColor = invertColor(field.value ?? "#FFFFFF");
-            console.log(complementaryColor);
             return (
               <FormItem className="col-span-1 pl-4">
                 <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -215,10 +186,7 @@ const ProductInformation: React.FC<IProps> = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    style={{
-                      backgroundColor: field.value,
-                      color: complementaryColor,
-                    }}
+                    type="color"
                     id="color"
                     placeholder="Couleur du produit"
                     {...field}
