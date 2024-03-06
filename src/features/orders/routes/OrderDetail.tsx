@@ -51,7 +51,7 @@ const OrderDetail: React.FC<IProps> = () => {
               <div>
                 <p className="text-lg">{item.product.name}</p>
                 <p className="text-lg">Quantité: {item.quantity}</p>
-                <p className="text-lg">Prix: ${item.price}</p>
+                <p className="text-lg">Prix: {item.price}€</p>
               </div>
               <img
                 src={"http://localhost:8080" + item.product.images[0].path}
