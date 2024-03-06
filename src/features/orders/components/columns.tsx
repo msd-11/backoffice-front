@@ -12,6 +12,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import * as dayjs from "dayjs";
+import { processOrder } from "../api/processOrder";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -52,7 +53,9 @@ export const columns: ColumnDef<Order>[] = [
               Actions
             </DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={() => {
+                processOrder({ id: order.id });
+              }}
               className="hover:bg-gray-100 select-none"
             >
               Passer en traitement

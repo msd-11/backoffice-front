@@ -45,8 +45,8 @@ const EmployeeAdd: React.FC<IProps> = () => {
     const data = {
       ...values,
       content: value,
-      roles: rolesTable.map((value: Role) => {
-        return { id: value.id };
+      roles: rolesTable.map((value: any) => {
+        return { id: value.value };
       }),
     };
 
