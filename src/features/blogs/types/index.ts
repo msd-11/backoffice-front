@@ -8,6 +8,8 @@ export type Blog = {
   slug: string;
   title: string;
   author: number;
+  bannerPath: string;
+  category: string;
   createdAt: string;
   lastUpdatedAt: string;
   content: string;

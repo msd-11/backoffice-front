@@ -41,7 +41,12 @@ export type Category = {
   name: string;
 };
 
+export type Stock = {
+  id: number;
+  stock: number;
+};
+
 export type ProductStockResponse = {
   statusCode: number;
-  data: number;
+  data: Stock[];
 };

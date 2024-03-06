@@ -19,11 +19,15 @@ export const useProducts = () => {
     queryFn: async () => {
       const productsResponse = await getProducts();
       const categoriesResponse = await getCategories();
+      const productStockResponse = await getProductStock();
 
       return Promise.all(
         productsResponse.data.map(async (product) => {
           return {
             ...product,
+            stock: productStockResponse.data.find(
+              (value) => value.id === product.id
+            )?.stock,
             categories: product.categories.map((categoryId) => {
               const matchedCategory = categoriesResponse.data.find(
                 (cat) => cat.id === categoryId

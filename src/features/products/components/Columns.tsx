@@ -46,6 +46,25 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    accessorKey: "stock",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="m-0 pl-0"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Stock
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("stock")}</div>
+    ),
+  },
+  {
     accessorKey: "price",
     header: () => <div className="text-left">Prix</div>,
     cell: ({ row }) => {
