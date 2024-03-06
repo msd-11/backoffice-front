@@ -29,11 +29,6 @@ export const columns: ColumnDef<Product>[] = [
     ),
   },
   {
-    accessorKey: "picture",
-    header: "",
-    cell: "",
-  },
-  {
     accessorKey: "categories",
     header: "Categories",
     cell: ({ row }) => {
@@ -49,25 +44,6 @@ export const columns: ColumnDef<Product>[] = [
         </div>
       );
     },
-  },
-  {
-    accessorKey: "stock",
-    header: ({ column }) => {
-      return (
-        <Button
-          className="m-0 pl-0"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Stock
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("stock")}</div>
-    ),
   },
   {
     accessorKey: "price",
@@ -103,11 +79,9 @@ export const columns: ColumnDef<Product>[] = [
               Actions
             </DropdownMenuLabel>
             <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              <Link to={`/produits/detail/${product.id}`}>Modifier</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              Voir historique
+              <Link className="w-full" to={`/produits/detail/${product.id}`}>
+                Modifier
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -64,7 +64,7 @@ export const columns: ColumnDef<Order>[] = [
             </DropdownMenuLabel>
 
             <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              <Link to={"detail"} state={{ order: order }}>
+              <Link className="w-full" to={"detail"} state={{ order: order }}>
                 Voir détail
               </Link>
             </DropdownMenuItem>

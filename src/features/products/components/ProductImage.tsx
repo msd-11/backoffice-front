@@ -1,19 +1,11 @@
 import { Input } from "@/components/ui/input";
-import { Plus, Image } from "lucide-react";
+import { Plus, Image, Trash } from "lucide-react";
 import { useState } from "react";
 import Title from "./Title";
 import { useStore } from "@/stores/store";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { API_URL } from "@/config";
 import { sendImage } from "../api/sendImage";
+import { toast } from "@/components/ui/use-toast";
 
 interface IProps {}
 
@@ -29,30 +21,54 @@ const ProductImage: React.FC<IProps> = () => {
     productStore.form.getValues("images")
   );
 
-  console.log("ok");
-  console.log(productStore.form.getValues("images"));
   const handleImageClick = (imageUrl: string) => {
     setCurrentImage(imageUrl);
   };
 
   const handleNewImage = (images: FileList) => {
-    console.log(productStore.form.getValues("images"));
-
-    sendImage(images[0])
-      .then((res: any) => {
-        const temp = Array.from(allImages);
-        temp.push({ path: res.data, order: temp.length + 1 });
-        console.log(temp);
-        setAllImages(temp);
-        productStore.form.setValue("images", temp);
-        setCurrentImage("http://localhost:8080" + res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (allImages.length < 5) {
+      if (images[0].size > 1000000) {
+        toast({
+          title: "Image trop volumineuse",
+          description: "Votre image est trop volumineuse, veuillez réessayer",
+          variant: "destructive",
+        });
+      } else {
+        sendImage(images[0])
+          .then((res: any) => {
+            const temp = Array.from(allImages);
+            temp.push({ path: res.data, order: temp.length + 1 });
+            setAllImages(temp);
+            productStore.form.setValue("images", temp);
+            setCurrentImage("http://localhost:8080" + res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            toast({
+              title: "Erreur",
+              description:
+                "Une erreur est survenue lors de l'upload de l'image, veuillez réessayer",
+              variant: "destructive",
+            });
+          });
+      }
+    }
   };
 
-  console.log(productStore.form.getValues());
+  const handleDeleteImage = () => {
+    const temp = Array.from(allImages);
+
+    temp.splice(
+      temp.findIndex((e) => e.path === currentImage),
+      1
+    );
+
+    setAllImages(temp);
+
+    if (temp.length > 0) {
+      setCurrentImage("http://localhost:8080" + temp[0].path);
+    }
+  };
 
   return (
     <div className="flex flex-col p-6 h-fit rounded-xl drop-shadow-sm bg-white gap-5">
@@ -96,13 +112,18 @@ const ProductImage: React.FC<IProps> = () => {
         </div>
       ) : (
         <div className="flex flex-col justify-center w-full rounded-xl">
-          <div className="flex justify-center bg-gray-100 rounded-xl h-80 w-80">
+          <div className="relative flex justify-center bg-gray-100 rounded-xl h-80 w-full">
+            <Trash
+              className="absolute bottom-2 right-2 hover:text-red-500 cursor-pointer"
+              size={15}
+              onClick={handleDeleteImage}
+            />
             <img
               className="bg-gray-100 object-contain h-auto w-full rounded-xl"
               src={currentImage}
             />
           </div>
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-4 mt-4 max-w-2xl flex-wrap justify-center">
             {allImages.map((image: any) => (
               <div className="flex justify-center bg-gray-100 rounded-xl h-20 w-20">
                 <img
@@ -115,35 +136,37 @@ const ProductImage: React.FC<IProps> = () => {
               </div>
             ))}
 
-            <div
-              className="flex items-center justify-center w-20 border rounded-xl"
-              style={{
-                borderStyle: "dashed",
-                borderWidth: "2px",
-              }}
-            >
-              <label
-                htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer hover:bg-gray-100"
+            {allImages.length === 5 ? null : (
+              <div
+                className="flex items-center justify-center w-20 border rounded-xl"
                 style={{
-                  paddingTop: "1.5rem",
-                  paddingBottom: "1.5rem",
-                  paddingLeft: "1.5rem",
-                  paddingRight: "1.5rem",
+                  borderStyle: "dashed",
+                  borderWidth: "2px",
                 }}
               >
-                <div className="flex flex-col items-center justify-center">
-                  <Plus color="gray" />
-                </div>
-                <Input
-                  id="dropzone-file"
-                  type="file"
-                  className="hidden"
-                  onChange={(e) => handleNewImage(e.target.files)}
-                  style={{ display: "none" }}
-                />
-              </label>
-            </div>
+                <label
+                  htmlFor="dropzone-file"
+                  className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer hover:bg-gray-100"
+                  style={{
+                    paddingTop: "1.5rem",
+                    paddingBottom: "1.5rem",
+                    paddingLeft: "1.5rem",
+                    paddingRight: "1.5rem",
+                  }}
+                >
+                  <div className="flex flex-col items-center justify-center">
+                    <Plus color="gray" />
+                  </div>
+                  <Input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => handleNewImage(e.target.files)}
+                    style={{ display: "none" }}
+                  />
+                </label>
+              </div>
+            )}
           </div>
         </div>
       )}

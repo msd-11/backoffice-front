@@ -36,10 +36,26 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "firstname",
     header: "Prénom",
+    cell: ({ row }) => {
+      return (
+        <p>
+          {row.original.firstname.charAt(0).toUpperCase() +
+            row.original.firstname.slice(1)}
+        </p>
+      );
+    },
   },
   {
     accessorKey: "lastname",
     header: "Nom",
+    cell: ({ row }) => {
+      return (
+        <p>
+          {row.original.lastname.charAt(0).toUpperCase() +
+            row.original.lastname.slice(1)}
+        </p>
+      );
+    },
   },
   {
     accessorKey: "email",

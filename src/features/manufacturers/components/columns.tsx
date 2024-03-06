@@ -47,13 +47,12 @@ export const columns: ColumnDef<Manufacturer>[] = [
               Actions
             </DropdownMenuLabel>
             <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              <Link to={`/fournisseurs/detail/${manufacturer.id}`}>
+              <Link
+                className="w-full"
+                to={`/fournisseurs/detail/${manufacturer.id}`}
+              >
                 Modifier
               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              Voir historique
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

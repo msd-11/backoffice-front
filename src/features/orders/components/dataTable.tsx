@@ -102,7 +102,7 @@ export function DataTable<TData, TValue>({
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="grid grid-cols-[25px_100px] gap-2 capitalize pl-2 py-1.5  hover:bg-gray-100 rounded"
+                    className="grid grid-cols-[25px_100px] gap-2 capitalize pl-8 py-1.5  hover:bg-gray-100 rounded"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)

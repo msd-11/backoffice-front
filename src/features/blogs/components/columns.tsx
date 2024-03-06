@@ -47,11 +47,9 @@ export const columns: ColumnDef<Blog>[] = [
               Actions
             </DropdownMenuLabel>
             <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              <Link to={`/blogs/detail/${blog.id}`}>Modifier</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-gray-100 select-none">
-              Voir historique
+              <Link className="w-full" to={`/blogs/detail/${blog.id}`}>
+                Modifier
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

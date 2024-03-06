@@ -49,12 +49,28 @@ const reinitPassword = (email: string) => {
 export const columns = (roles): ColumnDef<Employee>[] => {
   return [
     {
-      accessorKey: "lastname",
-      header: "Nom",
-    },
-    {
       accessorKey: "firstname",
       header: "Prénom",
+      cell: ({ row }) => {
+        return (
+          <p>
+            {row.original.firstname.charAt(0).toUpperCase() +
+              row.original.firstname.slice(1)}
+          </p>
+        );
+      },
+    },
+    {
+      accessorKey: "lastname",
+      header: "Nom",
+      cell: ({ row }) => {
+        return (
+          <p>
+            {row.original.lastname.charAt(0).toUpperCase() +
+              row.original.lastname.slice(1)}
+          </p>
+        );
+      },
     },
     {
       accessorKey: "email",
