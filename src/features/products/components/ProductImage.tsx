@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { API_URL } from "@/config";
+import { sendImage } from "../api/sendImage";
 
 interface IProps {}
 
@@ -24,6 +25,15 @@ const ProductImage: React.FC<IProps> = () => {
 
   const handleImageClick = (imageUrl: string) => {
     setCurrentImage(imageUrl);
+  };
+
+  const handleNewImage = (images: FileList) => {
+    console.log(images[0]);
+    sendImage(images[0])
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   console.log(productStore.form.getValues());
@@ -127,6 +137,7 @@ const ProductImage: React.FC<IProps> = () => {
                   id="dropzone-file"
                   type="file"
                   className="hidden"
+                  onChange={(e) => handleNewImage(e.target.files)}
                   style={{ display: "none" }}
                 />
               </label>

@@ -206,7 +206,7 @@ const ProductInformation: React.FC<IProps> = () => {
           render={({ field }) => {
             console.log(field);
 
-            const complementaryColor = invertColor(field.value);
+            const complementaryColor = invertColor(field.value ?? "#FFFFFF");
             console.log(complementaryColor);
             return (
               <FormItem className="col-span-1 pl-4">
