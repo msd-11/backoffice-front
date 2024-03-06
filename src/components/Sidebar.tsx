@@ -39,13 +39,13 @@ const Sidebar: React.FC<IProps> = () => {
           title="Tickets"
           to="/tickets"
           Icon={ClipboardList}
-          selected={location.pathname === "/tickets"}
+          selected={location.pathname.startsWith("/tickets")}
         />
         <NavItem
           title="Commandes"
           to="/commandes"
           Icon={ShoppingCart}
-          selected={location.pathname === "/commandes"}
+          selected={location.pathname.startsWith("/commandes")}
         />
         <NavItem
           title="Fournisseurs"

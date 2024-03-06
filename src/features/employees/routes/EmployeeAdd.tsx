@@ -55,7 +55,7 @@ const EmployeeAdd: React.FC<IProps> = () => {
 
       toast({
         title: "Ajout",
-        description: "Blog ajouté avec succès",
+        description: "Employé ajouté avec succès",
         variant: "success",
       });
     } catch (e: unknown) {

@@ -114,9 +114,6 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Link to={"/fournisseurs/add"}>
-          <Button className="ml-4">Ajouter</Button>
-        </Link>
       </div>
 
       <div className="rounded-md border">
