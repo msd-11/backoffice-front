@@ -97,9 +97,7 @@ const ProductImage: React.FC<IProps> = () => {
               <p className="mb-2 text-sm font-semibold text-gray-500">
                 Upload l'image du produit
               </p>
-              <p className="text-xs text-gray-500">
-                PNG ou JPG (MAX. 800x400px)
-              </p>
+              <p className="text-xs text-gray-500">PNG ou JPG (MAX. 1Mo)</p>
             </div>
             <Input
               id="dropzone-file"
