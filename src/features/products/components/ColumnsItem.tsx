@@ -15,10 +15,11 @@ import { Link } from "react-router-dom";
 export const columnsItem: ColumnDef<ProductItem>[] = [
   {
     accessorKey: "reference",
-    header: "Reference",
+    header: "Réference",
   },
   {
     id: "actions",
+    header: "Actions",
     enableHiding: false,
     cell: ({ row }) => {
       const product = row.original;
