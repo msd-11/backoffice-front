@@ -40,8 +40,12 @@ async function registerFn(data: RegisterCredentialsDTO) {
 }
 
 async function logoutFn() {
-  await logout();
-  storage.clearToken();
+  try {
+    await logout();
+    storage.clearToken();
+  } catch (e) {
+    storage.clearToken();
+  }
 }
 
 const authConfig = {
