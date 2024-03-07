@@ -36,7 +36,7 @@ const EmployeeAdd: React.FC<IProps> = () => {
   });
 
   const blogSchema = z.object({
-    email: z.string().describe("Email"),
+    email: z.string().email().describe("Email"),
     firstname: z.string().describe("Prénom"),
     lastname: z.string().describe("Nom"),
   });
