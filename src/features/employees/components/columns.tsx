@@ -25,6 +25,7 @@ import { ResetPasswordDTO, resetPassword } from "../api/resetPassword";
 import { useRoles } from "../api/getRoles";
 import { setRoles } from "../api/setRoles";
 import { disableEmployee } from "../api/disableEmployee";
+import { queryClient } from "@/lib/react-query";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -32,6 +33,7 @@ import { disableEmployee } from "../api/disableEmployee";
 
 const disableEmployeeAccount = async (puid: string) => {
   await disableEmployee({ puid: puid });
+  queryClient.invalidateQueries({ queryKey: ["employees"] });
   toast({
     title: "Désactivation effectuée",
     description: "L'employé a été désactivé",
@@ -78,6 +80,16 @@ export const columns = (roles): ColumnDef<Employee>[] => {
       accessorKey: "email",
       header: "Email",
     },
+    {
+      accessorKey: "disabled",
+      header: "Status",
+      cell: ({ row }) => {
+        const employee = row.original;
+
+        return <p>{employee.disabled ? "Désactivé" : "Activé"}</p>;
+      },
+    },
+
     {
       id: "roles",
       header: "Rôle",

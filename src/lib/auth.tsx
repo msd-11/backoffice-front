@@ -10,6 +10,7 @@ import {
   AuthUser,
 } from "@/features/auth";
 import storage from "@/utils/storage";
+import { logout } from "@/features/auth/api/logout";
 
 async function handleUserResponse(dataResponse: UserResponse) {
   const { data } = dataResponse;
@@ -39,6 +40,7 @@ async function registerFn(data: RegisterCredentialsDTO) {
 }
 
 async function logoutFn() {
+  await logout();
   storage.clearToken();
 }
 

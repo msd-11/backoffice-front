@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { ResetPasswordDTO, resetPassword } from "../api/resetPassword";
 import { disableClient } from "../api/disableClient";
+import { queryClient } from "@/lib/react-query";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -20,6 +21,7 @@ import { disableClient } from "../api/disableClient";
 
 const disableClientAccount = async (puid: string) => {
   await disableClient({ puid: puid });
+  queryClient.invalidateQueries({ queryKey: ["clients"] });
   toast({
     title: "Désactivation effectuée",
     description: "Le client a été désactivé",
@@ -64,6 +66,15 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "email",
     header: "Email",
+  },
+  {
+    accessorKey: "disabled",
+    header: "Status",
+    cell: ({ row }) => {
+      const client = row.original;
+
+      return <p>{client.disabled ? "Désactivé" : "Activé"}</p>;
+    },
   },
   {
     id: "actions",

@@ -9,6 +9,7 @@ export type Session = {
   browser: string;
   platform: string;
   deviceType: string;
+  createdAt: string;
 };
 
 export type SessionFinal = Session & IpInfo;

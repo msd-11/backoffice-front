@@ -31,7 +31,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import * as React from "react";
@@ -42,11 +42,13 @@ interface DataTableProps<TData, TValue> {
   isLoading: boolean;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTableItem<TData, TValue>({
   columns,
   data,
   isLoading,
 }: DataTableProps<TData, TValue>) {
+  const { id } = useParams();
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -54,6 +56,9 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  console.log("okkkk");
+  console.log(data);
+
   const table = useReactTable({
     data,
     columns,
@@ -73,14 +78,18 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  console.log(table.getRowModel().rows);
+
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Chercher client"
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Chercher fournisseur"
+          value={
+            (table.getColumn("reference")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("reference")?.setFilterValue(event.target.value)
           }
           className="max-w-sm p-2 w-fit"
         />
@@ -113,6 +122,9 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Link to={`/produits/items/add/${id}`}>
+          <Button className="ml-4">Ajouter</Button>
+        </Link>
       </div>
 
       <div className="rounded-md border">

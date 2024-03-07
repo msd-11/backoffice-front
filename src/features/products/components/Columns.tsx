@@ -102,6 +102,11 @@ export const columns: ColumnDef<Product>[] = [
                 Modifier
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-gray-100 select-none">
+              <Link className="w-full" to={`/produits/items/${product.id}`}>
+                Voir inventaire
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

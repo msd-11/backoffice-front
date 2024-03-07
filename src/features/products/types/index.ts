@@ -50,3 +50,20 @@ export type ProductStockResponse = {
   statusCode: number;
   data: Stock[];
 };
+
+export type ProductItem = {
+  id: number;
+  product: number;
+  reference: string;
+  qrcode: string;
+};
+
+export type ProductItemListResponse = {
+  statusCode: number;
+  data: ProductItem[];
+};
+
+export type ProductItemResponse = {
+  status: number;
+  data: ProductItem;
+};

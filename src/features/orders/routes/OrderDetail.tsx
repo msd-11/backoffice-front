@@ -1,3 +1,4 @@
+import * as dayjs from "dayjs";
 import { useLocation } from "react-router-dom";
 
 interface IProps {}
@@ -17,7 +18,7 @@ const OrderDetail: React.FC<IProps> = () => {
         <p className="text-lg mb-2">Statut: {status}</p>
         <p className="text-lg mb-2">Client: {customer}</p>
         <p className="text-lg mb-2">
-          Créée le: {new Date(created_at).toLocaleString()}
+          Créée le: {dayjs(created_at).format("DD/MM/YYYY HH:mm")}
         </p>
 
         <div className="border-t border-gray-200 mt-6 pt-6">
@@ -32,7 +33,7 @@ const OrderDetail: React.FC<IProps> = () => {
               <p className="text-lg mb-2">Pays:</p>
               <p className="text-lg mb-2">Téléphone:</p>
             </div>
-            <div>
+            <div className="col-span-3">
               <p className="text-lg mb-2">{address.name}</p>
               <p className="text-lg mb-2">{address.contactName}</p>
               <p className="text-lg mb-2">{address.address}</p>
