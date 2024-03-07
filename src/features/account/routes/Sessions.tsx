@@ -17,6 +17,7 @@ const Sessions: React.FC<IProps> = () => {
 
   return (
     <div>
+      <p className="py-6 pl-6 text-2xl font-bold">Vos sessions</p>
       {sessionsQuery.data!.map((value) => {
         return <SessionItem session={value} />;
       })}

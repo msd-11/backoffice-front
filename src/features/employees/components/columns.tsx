@@ -24,12 +24,14 @@ import { toast } from "@/components/ui/use-toast";
 import { ResetPasswordDTO, resetPassword } from "../api/resetPassword";
 import { useRoles } from "../api/getRoles";
 import { setRoles } from "../api/setRoles";
+import { disableEmployee } from "../api/disableEmployee";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 //
 
-const disableEmployee = (puid: string) => {
+const disableEmployeeAccount = async (puid: string) => {
+  await disableEmployee({ puid: puid });
   toast({
     title: "Désactivation effectuée",
     description: "L'employé a été désactivé",
@@ -37,8 +39,8 @@ const disableEmployee = (puid: string) => {
   });
 };
 
-const reinitPassword = (email: string) => {
-  resetPassword({ email: email } as ResetPasswordDTO);
+const reinitPassword = async (email: string) => {
+  await resetPassword({ email: email } as ResetPasswordDTO);
   toast({
     title: "Réinitialisation effectuée",
     description: "Un mail a été envoyé à l'employé",
@@ -147,7 +149,7 @@ export const columns = (roles): ColumnDef<Employee>[] => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => disableEmployee(employee.puid)}
+                onClick={() => disableEmployeeAccount(employee.puid)}
                 className="hover:bg-gray-100 select-none"
               >
                 Désactiver

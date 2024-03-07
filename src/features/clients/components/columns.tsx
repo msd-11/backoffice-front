@@ -11,12 +11,15 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { ResetPasswordDTO, resetPassword } from "../api/resetPassword";
+import { disableClient } from "../api/disableClient";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 //
 
-const disableClient = (puid: string) => {
+const disableClientAccount = async (puid: string) => {
+  await disableClient({ puid: puid });
   toast({
     title: "Désactivation effectuée",
     description: "Le client a été désactivé",
@@ -24,7 +27,8 @@ const disableClient = (puid: string) => {
   });
 };
 
-const reinitPassword = (puid: string) => {
+const reinitPassword = async (email: string) => {
+  await resetPassword({ email: email } as ResetPasswordDTO);
   toast({
     title: "Réinitialisation effectuée",
     description: "Un mail a été envoyé au client",
@@ -80,14 +84,14 @@ export const columns: ColumnDef<Client>[] = [
               Actions
             </DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => disableClient(client.puid)}
+              onClick={() => reinitPassword(client.email)}
               className="hover:bg-gray-100 select-none"
             >
               Réinitialiser mot de passe
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => reinitPassword(client.puid)}
+              onClick={() => disableClientAccount(client.puid)}
               className="hover:bg-gray-100 select-none"
             >
               Désactiver
